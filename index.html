@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#edf0f4">
+  <meta name="description" content="Две версии сайта строительной компании ЮКС: авторский концепт и вёрстка по макету Figma.">
+  <title>ЮКС — выбор версии сайта</title>
+  <link rel="icon" type="image/svg+xml" href="./custom-design/assets/favicon.svg">
+  <style>
+    @font-face {
+      font-family: Manrope;
+      src: url("./custom-design/assets/fonts/manrope-variable.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 200 800;
+      font-display: swap;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #edf0f4;
+      color: #0d192a;
+      font-family: Manrope, system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    main {
+      width: min(100%, 102rem);
+      margin-inline: auto;
+      padding: clamp(1.4rem, 4.4vh, 3.4rem) clamp(1.15rem, 5vw, 6rem) clamp(2.25rem, 6vh, 5.5rem);
+    }
+    .mast { display: flex; align-items: center; gap: 1.4rem; }
+    .mast::after { content: ""; height: 1px; flex: 1; background: #b8c3cf; }
+    .brand { display: inline-flex; align-items: center; gap: .46rem; }
+    .brand img { width: 1.45rem; height: 1.78rem; filter: brightness(0) saturate(1); }
+    .brand b { font-size: 1.7rem; font-weight: 800; letter-spacing: -.065em; }
+    h1 {
+      margin: clamp(2.25rem, 5.9vh, 5rem) 0 clamp(1.65rem, 3.75vh, 3.4rem);
+      font-size: clamp(2.65rem, 6.1vw, 6.8rem);
+      line-height: 1.04;
+      letter-spacing: -.068em;
+      font-weight: 650;
+      text-wrap: balance;
+    }
+    .versions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.2rem, 2.1vw, 2.4rem); }
+    .option {
+      min-width: 0;
+      display: block;
+      color: inherit;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .option:focus-visible { outline: 3px solid #285ca5; outline-offset: 5px; }
+    .scene {
+      position: relative;
+      display: block;
+      isolation: isolate;
+      overflow: hidden;
+      aspect-ratio: 1.57;
+      background: #203349;
+    }
+    .scene img, .drawing {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .scene img { object-fit: cover; }
+    .concept .scene img { object-position: 60% center; }
+    .reference .scene img { object-position: 57% center; }
+    .drawing {
+      --reveal: 13%;
+      z-index: 1;
+      clip-path: inset(0 0 0 calc(100% - var(--reveal)));
+    }
+    .drawing::after {
+      content: "";
+      position: absolute;
+      inset-block: 0;
+      right: calc(var(--reveal) - 1px);
+      width: 1px;
+      background: #b0e0ff;
+    }
+    .caption {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .65rem;
+      margin-top: 1rem;
+      padding-bottom: .95rem;
+      border-bottom: 1px solid #a9b6c4;
+    }
+    .name { font-size: clamp(1.43rem, 2.18vw, 2.5rem); font-weight: 680; line-height: 1.13; letter-spacing: -.047em; }
+    .open { flex: none; border-radius: 3px; padding: .5rem .92rem; font-size: .875rem; font-weight: 690; line-height: 1.3; }
+    .concept .open { background: #ff7548; color: #101a29; }
+    .reference .open { background: #063a75; color: #fff; }
+    .option:active .open { opacity: .84; }
+    @media (prefers-reduced-motion: no-preference) {
+      .scene > img, .drawing img { transition: transform .65s cubic-bezier(.2,.75,.2,1); }
+      .drawing { transition: clip-path .62s cubic-bezier(.2,.75,.2,1); }
+      .drawing::after { transition: right .62s cubic-bezier(.2,.75,.2,1); }
+      @media (hover: hover) {
+        .option:hover .scene img { transform: scale(1.035); }
+        .concept:hover .drawing { --reveal: 28%; }
+      }
+      .concept:focus-visible .drawing { --reveal: 28%; }
+    }
+    @media (max-width: 45rem) {
+      .mast { gap: 1rem; }
+      h1 { max-width: 13ch; }
+      .versions { grid-template-columns: 1fr; gap: 1.75rem; }
+      .scene { aspect-ratio: 1.78; }
+      .caption { margin-top: .75rem; padding-bottom: .8rem; }
+    }
+    @media (forced-colors: active) {
+      .open { border: 1px solid ButtonText; }
+      .option:focus-visible { outline-color: Highlight; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="mast"><div class="brand"><img src="./custom-design/assets/logo-mark-white.svg" width="24" height="30" alt=""><b>ЮКС</b></div></div>
+    <h1>Выберите версию сайта</h1>
+    <nav class="versions" aria-label="Версии сайта ЮКС">
+      <a class="option concept" href="./custom-design/">
+        <span class="scene" aria-hidden="true">
+          <img src="./custom-design/assets/bridge-atlas.webp" width="1672" height="941" alt="">
+          <span class="drawing"><img src="./custom-design/assets/bridge-lines.webp" width="1672" height="941" alt=""></span>
+        </span>
+        <span class="caption"><span class="name">Apple Design</span><span class="open" aria-hidden="true">Открыть</span></span>
+      </a>
+      <a class="option reference" href="./figma-version/">
+        <span class="scene" aria-hidden="true"><img src="./figma-version/assets/hero-bridge.webp" width="1440" height="695" alt=""></span>
+        <span class="caption"><span class="name">По макету Figma</span><span class="open" aria-hidden="true">Открыть</span></span>
+      </a>
+    </nav>
+  </main>
+</body>
+</html>

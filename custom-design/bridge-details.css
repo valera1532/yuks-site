@@ -1,0 +1,139 @@
+.bridge-points {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  transform-origin: center;
+  transform: translate3d(0, var(--depth-scroll, 0px), 0) var(--bridge-camera);
+}
+
+.bridge-point {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: none;
+  color: #fff;
+  cursor: pointer;
+  pointer-events: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.bridge-points.is-ready .bridge-point { pointer-events: auto; }
+.bridge-point-plus {
+  display: grid;
+  place-items: center;
+  width: 1.48rem;
+  height: 1.48rem;
+  border: 1px solid rgb(255 255 255 / .9);
+  border-radius: 50%;
+  background: #13253dcc;
+  box-shadow: 0 0 0 .24rem rgb(7 21 37 / .3), 0 2px 9px #0715256e;
+  opacity: 0;
+  scale: .78;
+  transition: color .14s, background-color .14s, box-shadow .14s, scale .22s, opacity .18s;
+}
+.bridge-points.is-ready .bridge-point-plus { opacity: 1; scale: 1; }
+.bridge-point-plus::before, .bridge-point-plus::after,
+.bridge-callout-close::before, .bridge-callout-close::after {
+  content: "";
+  position: absolute;
+  width: .53rem;
+  height: 1.5px;
+  background: currentColor;
+}
+.bridge-point-plus::after { transform: rotate(90deg); }
+.bridge-point[aria-expanded=true] .bridge-point-plus,
+.bridge-point:focus-visible .bridge-point-plus {
+  border-color: white;
+  background: #fff;
+  color: #101e30;
+  box-shadow: 0 0 0 .23rem #f674489c, 0 2px 9px #07152555;
+}
+.bridge-point:focus-visible, .bridge-callout-close:focus-visible {
+  outline: 2px solid white;
+  outline-offset: -2px;
+}
+@media (hover: hover) {
+  .bridge-point:hover .bridge-point-plus { scale: 1.12; background: #fff; color: #14243b; }
+}
+.bridge-point:active .bridge-point-plus { scale: .92; }
+
+.bridge-callout {
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 3;
+  width: min(15.75rem, calc(100% - 1.5rem));
+  margin: 0;
+  padding: .85rem 1rem 1rem;
+  border: 1px solid #6a7e91;
+  border-top: 2px solid #ff7f53;
+  border-radius: .25rem;
+  background: #101e31f5;
+  color: #f4f7fb;
+  box-shadow: 0 .55rem 2rem #05132655;
+  opacity: 0;
+  scale: .96;
+  pointer-events: none;
+  transition: opacity .18s ease, scale .22s cubic-bezier(.2,.7,.25,1);
+}
+.bridge-callout.is-open {
+  opacity: 1;
+  scale: 1;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+.bridge-callout-head { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
+.bridge-callout #bridge-callout-title {
+  margin: 0;
+  color: inherit;
+  font-family: inherit;
+  font-weight: 650;
+  font-size: 1.04rem;
+  line-height: 1.25;
+  letter-spacing: -.025em;
+}
+.bridge-callout #bridge-callout-copy {
+  margin: .48rem 0 0;
+  color: #d6dfea;
+  font-size: .92rem;
+  font-weight: 450;
+  line-height: 1.4;
+}
+.bridge-callout-close {
+  position: relative;
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  margin: -.35rem -.4rem -.25rem 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #eaf1fb;
+  cursor: pointer;
+}
+.bridge-callout-close::before, .bridge-callout-close::after { width: .7rem; }
+.bridge-callout-close::before { transform: rotate(45deg); }
+.bridge-callout-close::after { transform: rotate(-45deg); }
+.bridge-callout-close:hover { background: #30435c; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .bridge-points.is-ready .bridge-point-plus {
+    animation: bridge-point-arrive .34s cubic-bezier(.2,.7,.25,1) calc(var(--point-order) * 55ms) backwards;
+  }
+  @keyframes bridge-point-arrive { from { opacity: 0; scale: .75; } }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bridge-point-plus, .bridge-callout { transition: none; }
+  .bridge-points .bridge-point .bridge-point-plus, .bridge-callout { scale: 1; }
+}
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .bridge-point-plus, .bridge-callout { background: #102036; }
+}

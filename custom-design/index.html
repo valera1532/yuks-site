@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#081424">
+  <meta name="description" content="Строительство, реконструкция и ремонт мостов: проекты, команда и контакты ЮКС">
+  <title>ЮКС — мосты и транспортная инфраструктура</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" as="image" href="assets/bridge-atlas.webp" fetchpriority="high">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="bridge-details.css">
+  <link rel="stylesheet" href="chapters.css">
+  <link rel="stylesheet" href="projects.css">
+  <link rel="stylesheet" href="contact.css">
+  <script src="app.js" defer></script>
+  <script src="bridge-details.js" defer></script>
+  <script src="motion.js" defer></script>
+  <script src="projects.js" defer></script>
+  <script src="contact.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Перейти к содержанию</a>
+  <header class="mast" id="mast">
+    <div class="frame mast-inner">
+      <a class="brand" href="#home" aria-label="ЮКС — на главную"><img src="assets/logo-mark-white.svg" width="26" height="34" alt=""><span>ЮКС</span></a>
+      <nav class="primary-nav" id="primary-nav" aria-label="Основное меню">
+        <a href="#projects">Проекты</a><a href="#company">Компания</a><a href="#services">Направления</a><a href="#career">Карьера</a><a href="#contacts">Контакты</a>
+      </nav>
+      <div class="mast-actions">
+        <button class="contact-top" type="button" data-contact aria-haspopup="dialog">Связаться</button>
+        <button class="menu-switch" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Открыть меню"><i></i><i></i></button>
+      </div>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero" id="home" aria-labelledby="hero-title">
+      <div class="bridge-stage">
+        <div class="bridge-media" id="bridge-media">
+          <div class="bridge-optics">
+            <img class="bridge-render" width="1672" height="941" src="assets/bridge-atlas.webp" alt="Визуализация оранжевого арочного моста над рекой в синий час" fetchpriority="high">
+            <div class="bridge-drawing" aria-hidden="true">
+              <img width="1672" height="941" src="assets/bridge-lines.webp" alt="">
+              <svg class="structure-notes" viewBox="0 0 1672 941" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <g><circle cx="1380" cy="178" r="4"/><path d="M1380 178l-70 86h-164"/><text x="1146" y="251">Несущая арка</text></g>
+                <g><circle cx="1294" cy="389" r="4"/><path d="M1294 389l58 -55h172"/><text x="1360" y="321">Подвески</text></g>
+                <g><circle cx="1070" cy="593" r="4"/><path d="M1070 593l55 90h178"/><text x="1130" y="712">Пролётное строение</text></g>
+              </svg>
+            </div>
+            <div class="scan-rule" aria-hidden="true"></div>
+          </div>
+          <div class="bridge-points" role="group" aria-label="Устройство моста"></div>
+        </div>
+        <div class="hero-shade" aria-hidden="true"></div>
+        <div class="frame hero-inner">
+          <div class="hero-copy">
+            <p class="category hero-category"><span class="engine-mark" aria-hidden="true"></span>Строительная компания</p>
+            <h1 id="hero-title"><span class="word-mask"><span>Соединяем</span></span> <span class="word-mask serif"><em>берега</em></span></h1>
+            <p class="hero-lede">Строим и реконструируем мосты,<br> путепроводы и автомобильные дороги</p>
+            <a class="pill hero-cta" href="#projects">Смотреть проекты</a>
+          </div>
+        </div>
+      </div>
+      <div class="instrument">
+        <div class="frame instrument-inner">
+          <div class="figure-credit">
+            <img width="80" height="45" src="assets/bridge-lines.webp" alt="">
+            <div><b>Арочный мост</b><span>Архитектурная визуализация</span></div>
+          </div>
+          <div class="compare-tools" role="group" aria-label="Сравнение чертежа и визуализации моста">
+            <button type="button" data-mix="0" aria-controls="bridge-media">Чертёж</button>
+            <label class="mix-control"><span class="sr-only">Переход от чертежа к объёмному виду</span><input type="range" min="0" max="100" step="1" value="100" aria-controls="bridge-media" id="bridge-mix"></label>
+            <button type="button" data-mix="100" aria-controls="bridge-media">Объём</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="paper section projects" id="projects" aria-labelledby="projects-title">
+      <div class="frame">
+        <div class="section-heading" data-reveal="sequence">
+          <h2 id="projects-title">Архив <em>проектов</em></h2>
+          <p>Восемь объектов ЮКС — от мостов<br class="wide-only"> через малые реки до федеральных трасс</p>
+        </div>
+        <div id="project-catalog" data-reveal="panorama"></div>
+        <noscript><p>Среди объектов ЮКС — мост через Кальмиус в Калиновке, сооружения на трассе А-289 и мост через Грузский Еланчик в Ивановке</p></noscript>
+      </div>
+    </section>
+    <section class="company section" id="company" aria-labelledby="company-title">
+      <div class="frame">
+        <div class="company-grid">
+          <div class="company-title" data-reveal="sequence">
+            <p class="category"><span class="rule"></span>О компании</p>
+            <h2 id="company-title">Инженеры<br> и строители</h2>
+          </div>
+          <div class="company-lede" data-reveal="sequence">
+            <p>С 2022 года ЮКС объединяет специалистов по строительству мостов и мостовых сооружений</p>
+            <p>Работаем на каждом этапе — от устройства фундаментов и опор до монтажа пролётов</p>
+            <p>За каждым объектом стоят люди, техника и точность инженерных решений</p>
+          </div>
+        </div>
+        <div class="field-gallery" data-gallery role="region" aria-label="Фоторепортаж со стройплощадки">
+          <div class="gallery-top" data-reveal="sequence"><h3>На стройплощадке</h3><div class="gallery-tools"><span data-count>01 / 08</span><button type="button" class="round" data-prev aria-label="Предыдущая фотография"><i class="chevron back"></i></button><button type="button" class="round" data-next aria-label="Следующая фотография"><i class="chevron"></i></button></div></div>
+          <div class="photo-track" data-track aria-label="Фотографии стройплощадки">
+            <figure><img src="assets/about-construction.webp" width="1365" height="1022" loading="lazy" alt="Краны над бетонными опорами моста"><figcaption>Монтаж опор</figcaption></figure>
+            <figure><img src="assets/gallery/slide-2.webp" width="1365" height="1022" loading="lazy" alt="Строительные леса и кран у мостового пролёта"><figcaption>Сборка пролёта</figcaption></figure>
+            <figure><img src="assets/gallery/slide-3.webp" width="1365" height="1022" loading="lazy" alt="Автокран поднимает бетонную конструкцию"><figcaption>Подъём конструкции</figcaption></figure>
+            <figure><img src="assets/gallery/slide-4.webp" width="1365" height="1022" loading="lazy" alt="Краны устанавливают длинную мостовую балку"><figcaption>Установка балки</figcaption></figure>
+            <figure><img src="assets/gallery/slide-5.webp" width="935" height="701" loading="lazy" alt="Монтажник в страховочной привязи"><figcaption>Работа на высоте</figcaption></figure>
+            <figure><img src="assets/gallery/slide-6.webp" width="941" height="705" loading="lazy" alt="Подъёмник под мостовым полотном"><figcaption>Под мостовым полотном</figcaption></figure>
+            <figure><img src="assets/gallery/slide-7.webp" width="1086" height="814" loading="lazy" alt="Кран поднимает арматурный каркас"><figcaption>Армирование опоры</figcaption></figure>
+            <figure><img src="assets/gallery/slide-8.webp" width="1365" height="1022" loading="lazy" alt="Бригада укладывает арматуру мостового полотна"><figcaption>Работа с арматурой</figcaption></figure>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="services" class="section paper" aria-labelledby="services-title">
+      <div class="frame service-grid">
+        <div data-reveal><p class="category"><span class="rule"></span>Компетенции</p><h2 id="services-title">Что мы<br> строим</h2></div>
+        <div class="service-list" data-reveal>
+          <details open>
+            <summary>Строительство мостов<span aria-hidden="true"></span></summary>
+            <div class="service-panel"><div class="service-body">
+              <p>Возводим мосты через реки: устраиваем фундаменты, строим опоры и монтируем пролётные строения</p>
+              <div class="service-photo"><img src="assets/gallery/slide-4.webp" alt="Монтаж мостовой балки двумя кранами" width="1365" height="1022" loading="lazy" decoding="async"></div>
+            </div></div>
+          </details>
+          <details>
+            <summary>Мостовые сооружения<span aria-hidden="true"></span></summary>
+            <div class="service-panel"><div class="service-body">
+              <p>Строим путепроводы и другие инженерные сооружения в составе транспортной инфраструктуры</p>
+              <div class="service-photo"><img src="assets/gallery/slide-2.webp" alt="Строительные леса у мостового пролёта" width="1365" height="1022" loading="lazy" decoding="async"></div>
+            </div></div>
+          </details>
+          <details>
+            <summary>Реконструкция и ремонт<span aria-hidden="true"></span></summary>
+            <div class="service-panel"><div class="service-body">
+              <p>При реконструкции мостовых переходов демонтируем старые конструкции и устанавливаем новые</p>
+              <div class="service-photo"><img src="assets/projects/kalinovka.webp" alt="Обновлённый мост через Кальмиус в Калиновке" width="1760" height="679" loading="lazy" decoding="async"></div>
+            </div></div>
+          </details>
+          <details>
+            <summary>Дорожная инфраструктура<span aria-hidden="true"></span></summary>
+            <div class="service-panel"><div class="service-body">
+              <p>Участвуем в развитии автомобильных дорог и транспортных коридоров, включая мостовые сооружения на федеральных трассах</p>
+              <div class="service-photo"><img src="assets/projects/a289.webp" alt="Вид сверху на трассу А-289" width="1058" height="939" loading="lazy" decoding="async"></div>
+            </div></div>
+          </details>
+        </div>
+      </div>
+    </section>
+    <section class="career" id="career" aria-labelledby="career-title">
+      <div class="frame career-grid">
+        <div class="career-photo"><img data-reveal="panorama" src="assets/team-workers.webp" width="1785" height="735" loading="lazy" alt="Специалисты ЮКС на стройплощадке у моста"></div>
+        <div class="career-copy" data-reveal="sequence">
+          <p class="category"><span class="rule"></span>Карьера в ЮКС</p>
+          <h2 id="career-title">Строим<br> вместе</h2>
+          <p>Наша команда — инженеры и специалисты на стройплощадках</p>
+          <button class="pill accent" type="button" data-contact="Вакансии" aria-haspopup="dialog">Узнать о вакансиях</button>
+        </div>
+      </div>
+    </section>
+    <section class="section partners paper" id="partners" aria-labelledby="partners-title">
+      <div class="frame">
+        <h2 class="partner-heading" id="partners-title" data-reveal>Наши партнёры</h2>
+        <ul class="partner-list" data-reveal="sequence">
+          <li><img src="assets/partner-nps.webp" alt="НПС — Дороги и мосты" width="360" height="180" loading="lazy"></li>
+          <li><img src="assets/partner-mostovik.webp" alt="Мостовик" width="361" height="78" loading="lazy"></li>
+          <li><img src="assets/partner-tsmz.webp" alt="Цимлянский машиностроительный завод" width="371" height="118" loading="lazy"></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+  <footer id="contacts" class="footer">
+    <div class="frame">
+      <div class="footer-main">
+        <div data-reveal="sequence"><p class="category"><span class="rule"></span>Контакты</p><h2>Обсудим<br> проект?</h2><button class="pill accent" type="button" data-contact aria-haspopup="dialog">Написать нам</button></div>
+        <address data-reveal="sequence"><span>Мариуполь</span><a href="tel:+79185208753">+7 918 520-87-53</a><a href="mailto:yuks61@mail.ru">yuks61@mail.ru</a></address>
+      </div>
+      <div class="footer-end"><a class="brand" href="#home" aria-label="ЮКС — на главную"><img src="assets/logo-mark-white.svg" width="22" height="29" alt=""><span>ЮКС</span></a><small>© 2026 ООО «ЮКС»</small><a href="#home">Наверх</a></div>
+    </div>
+  </footer>
+  <dialog id="contact-dialog" aria-labelledby="contact-dialog-title"></dialog>
+</body>
+</html>

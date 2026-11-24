@@ -1,0 +1,437 @@
+#featured-projects,
+.project-catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(12px, 2.9vw, 42px);
+}
+
+.project-card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  width: 100%;
+  aspect-ratio: 254 / 268;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 5.4% 3% 7.5%;
+  border: 0;
+  border-radius: 9px;
+  background: #15559a;
+  color: #fff;
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+}
+
+.project-card-photo,
+.project-card::after {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.project-card-photo {
+  z-index: -2;
+  object-fit: cover;
+}
+
+.project-card::after {
+  z-index: -1;
+  background: linear-gradient(transparent 58%, rgba(4, 16, 28, .45));
+  content: '';
+}
+
+.project-card-region,
+.project-card-name {
+  font-family: Manrope, Arial, sans-serif;
+  font-size: clamp(.94rem, 1.39vw, 1.25rem);
+  line-height: .979;
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+.project-card-region {
+  max-width: 96%;
+  padding: .27em .6em;
+  border-radius: 5px;
+  background: white;
+  color: #101010;
+}
+
+.project-card-name {
+  color: white;
+  font-weight: 700;
+  text-shadow: 0 1px 3px #16222d88;
+}
+
+.project-card[data-project="staraya-laspa"] .project-card-region {
+  background: #15559a;
+  color: #fff;
+}
+
+.project-card:focus-visible,
+.project-dialog button:focus-visible {
+  outline: 3px solid #0084ef;
+  outline-offset: 3px;
+}
+
+.project-dialog {
+  position: fixed;
+  inset: 0;
+  width: min(900px, calc(100% - 32px));
+  max-width: none;
+  max-height: calc(100% - 40px);
+  max-height: calc(100dvh - 40px);
+  margin: auto;
+  border: 0;
+  border-radius: 12px;
+  padding: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  background: #fff;
+  color: #071d38;
+  font: inherit;
+}
+
+.project-dialog,
+.project-dialog * {
+  box-sizing: border-box;
+}
+
+.project-dialog::backdrop {
+  background: rgba(4, 15, 29, .64);
+}
+
+html:has(.project-dialog[open]) {
+  overflow: hidden;
+}
+
+.project-dialog[data-view="catalog"] {
+  width: min(1100px, calc(100% - 32px));
+}
+
+.project-dialog-controls {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  height: 0;
+}
+
+.project-dialog-close {
+  position: absolute;
+  right: 21px;
+  top: 12px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: white;
+  color: #071d38;
+  cursor: pointer;
+}
+
+.project-dialog-close::before,
+.project-dialog-close::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 26px;
+  height: 5px;
+  background: currentColor;
+  content: '';
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.project-dialog-close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.project-dialog-close:hover,
+.project-back:hover {
+  background: #edf3fa;
+}
+
+.project-dialog[data-view="catalog"] .project-dialog-close {
+  top: 20px;
+  right: 24px;
+}
+
+.project-dialog[data-view="catalog"] .project-dialog-body {
+  padding: 37px 34px 46px;
+}
+
+.project-dialog[data-view="catalog"] h2 {
+  margin: 0 58px 14px 0;
+  color: #071d38;
+  font-size: 2rem;
+  font-weight: 750;
+  line-height: 1.1;
+}
+
+.project-catalog-intro {
+  max-width: 950px;
+  margin: 0;
+  font-size: 1.125rem;
+  line-height: 1.1;
+}
+
+.project-catalog-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(18px, 4.9vw, 54px);
+  margin: 42px 28px 0 17px;
+}
+
+.project-catalog-grid .project-card-region,
+.project-catalog-grid .project-card-name {
+  font-size: .9rem;
+}
+
+.project-detail {
+  min-height: 700px;
+  padding: 54px 6% 26px;
+}
+
+.project-detail-photo {
+  display: block;
+  width: 100%;
+  max-height: 485px;
+  object-fit: contain;
+}
+
+.project-detail h2 {
+  margin: 16px 0 18px;
+  color: #071d38;
+  font-size: 1.25rem;
+  line-height: 1.05;
+  font-weight: 750;
+}
+
+.project-detail-copy p {
+  margin: 0;
+  color: #071d38;
+  font-size: 1.125rem;
+  line-height: 1.08;
+}
+
+.project-detail--kalinovka {
+  padding: 61px 25px 40px;
+}
+
+.project-detail--kalinovka h2,
+.project-detail--kalinovka .project-detail-copy {
+  margin-inline: 12px;
+}
+
+.project-detail--kalinovka h2 {
+  margin-top: 21px;
+}
+
+.project-detail--a289 {
+  padding: 45px 42px 26px;
+}
+
+.project-detail--a289 .project-detail-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 555fr) minmax(0, 238fr);
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 14px;
+}
+
+.project-detail--a289 .project-detail-photo {
+  max-height: none;
+}
+
+.project-detail--ivanovka .project-detail-photo {
+  width: 97%;
+  margin-inline: auto;
+}
+
+.project-back {
+  position: absolute;
+  top: 6px;
+  left: 24px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 5px;
+  background: white;
+  color: #15559a;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .project-card:hover {
+    box-shadow: 0 5px 16px rgb(7 29 56 / 20%);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .project-card,
+  .project-dialog-close,
+  .project-back {
+    transition: box-shadow 180ms ease-out, background-color 140ms ease-out;
+  }
+
+  .project-card-photo {
+    transition: transform 230ms cubic-bezier(.2, .7, .3, 1);
+  }
+
+  .project-card:focus-visible .project-card-photo {
+    transform: scale(1.025);
+  }
+
+  .project-dialog {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 160ms ease-out, transform 180ms cubic-bezier(.2, .7, .3, 1),
+      overlay 180ms allow-discrete, display 180ms allow-discrete;
+  }
+
+  .project-dialog[open] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .project-dialog::backdrop {
+    opacity: 0;
+    transition: opacity 160ms ease-out, overlay 180ms allow-discrete, display 180ms allow-discrete;
+  }
+
+  .project-dialog[open]::backdrop {
+    opacity: 1;
+  }
+
+  .project-dialog:not([open]),
+  .project-dialog:not([open])::backdrop {
+    pointer-events: none;
+  }
+
+  @starting-style {
+    .project-dialog[open] {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+
+    .project-dialog[open]::backdrop {
+      opacity: 0;
+    }
+  }
+
+  .project-dialog[data-switching][data-view="detail"] .project-detail,
+  .project-dialog[data-switching][data-view="catalog"] .project-catalog-grid {
+    animation: project-view-in 160ms ease-out;
+  }
+
+  @keyframes project-view-in {
+    from { opacity: .5; transform: translateY(4px); }
+    to { opacity: 1; transform: none; }
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .project-card:hover .project-card-photo {
+    transform: scale(1.035);
+  }
+}
+
+@media (max-width: 830px) {
+  .project-catalog-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 28px 0 0;
+    gap: 20px;
+  }
+
+  .project-detail {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 650px) {
+  .project-dialog,
+  .project-dialog[data-view="catalog"] {
+    width: calc(100% - 20px);
+    max-height: calc(100% - 20px);
+    max-height: calc(100dvh - 20px);
+  }
+
+  .project-dialog[data-view="catalog"] .project-dialog-body {
+    padding: 22px 16px;
+  }
+
+  .project-dialog[data-view="catalog"] .project-dialog-close,
+  .project-dialog-close {
+    top: 6px;
+    right: 6px;
+  }
+
+  .project-dialog[data-view="catalog"] h2 {
+    font-size: 1.65rem;
+  }
+
+  .project-catalog-intro,
+  .project-detail-copy p {
+    font-size: 1rem;
+    line-height: 1.35;
+  }
+
+  .project-catalog-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 10px;
+    margin-top: 22px;
+  }
+
+  .project-detail,
+  .project-detail--kalinovka,
+  .project-detail--a289 {
+    padding: 54px 16px 24px;
+  }
+
+  .project-detail--a289 .project-detail-heading {
+    display: block;
+    margin: 0;
+  }
+
+  .project-detail--a289 .project-detail-photo {
+    max-height: 360px;
+  }
+
+  .project-detail--ivanovka .project-detail-photo {
+    width: 100%;
+  }
+
+  .project-detail--kalinovka h2,
+  .project-detail--kalinovka .project-detail-copy {
+    margin-inline: 0;
+  }
+
+  .project-detail-copy p + p {
+    margin-top: .6em;
+  }
+
+  .project-back {
+    left: 8px;
+    top: 8px;
+  }
+}
+
+@media (max-width: 560px) {
+  #featured-projects {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  #featured-projects .project-card {
+    aspect-ratio: 1.55;
+  }
+
+  #featured-projects .project-card-region,
+  #featured-projects .project-card-name {
+    font-size: 1.125rem;
+  }
+}

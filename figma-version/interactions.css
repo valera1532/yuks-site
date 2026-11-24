@@ -1,0 +1,136 @@
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
+.info-dialog {
+  position: fixed;
+  margin: auto;
+  box-sizing: border-box;
+  width: min(760px, calc(100% - 2rem));
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  color: #071d38;
+  background: white;
+  border: 0;
+  border-radius: 14px;
+  padding: 3.75rem 2rem 2.25rem;
+  font-family: Inter, Arial, sans-serif;
+}
+
+.info-dialog::backdrop {
+  background: rgb(7 29 56 / 65%);
+}
+
+.info-dialog .dialog-close {
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: #071d38;
+  cursor: pointer;
+}
+
+.dialog-close::before, .dialog-close::after {
+  grid-area: 1 / 1;
+  content: "";
+  width: 24px;
+  height: 4px;
+  background: currentColor;
+  transform: rotate(45deg);
+}
+
+.dialog-close::after { transform: rotate(-45deg); }
+.dialog-close:hover { background: rgb(0 0 0 / 10%); }
+.dialog-close:focus-visible { outline: 2px solid currentColor; }
+
+.company-dialog {
+  background: #15559a;
+  color: white;
+}
+
+.company-dialog[open] {
+  display: flex;
+  min-height: min(650px, calc(100dvh - 2rem));
+  flex-direction: column;
+}
+
+.company-dialog-copy {
+  margin: auto 0;
+}
+
+.company-dialog h2, .company-dialog p {
+  font: 700 1.25rem/1.05 Inter, Arial, sans-serif;
+  color: inherit;
+  margin: 0;
+}
+
+.company-dialog-copy > * + * { margin-top: 1.25rem; }
+
+.jobs-dialog {
+  width: min(520px, calc(100% - 2rem));
+}
+
+.jobs-dialog h2 { font: 600 2rem/1.15 Manrope, Arial, sans-serif; margin: 0 0 1rem; }
+.jobs-dialog p { margin: 0 0 1rem; line-height: 1.5; }
+.jobs-dialog > a { display: block; width: max-content; color: #15559a; margin-bottom: .5rem; }
+.jobs-dialog .action-button { margin-top: 1.25rem; }
+#form-status a { color: inherit; text-decoration: underline; }
+.about-slider { touch-action: pan-y pinch-zoom; }
+
+@media (max-width: 600px) {
+  .info-dialog { padding-inline: 1.25rem; }
+  .company-dialog h2, .company-dialog p { font-size: 1rem; line-height: 1.35; }
+}
+
+@keyframes content-arrival {
+  from { opacity: .25; translate: 0 16px; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+@keyframes menu-arrival {
+  from { opacity: 0; translate: 0 -8px; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  .hero h1, .hero p, .hero .action-button,
+  .entering-view {
+    animation: content-arrival 460ms cubic-bezier(.2,.75,.25,1) backwards;
+  }
+  .hero p, .service-list > :nth-child(2).entering-view { animation-delay: 55ms; }
+  .hero .action-button, .service-list > :nth-child(3).entering-view { animation-delay: 95ms; }
+  .service-list > :nth-child(4).entering-view { animation-delay: 135ms; }
+  .entering-view:focus-within, .hero .action-button:focus-visible { animation: none; }
+
+  .info-dialog[open] { animation: content-arrival 195ms ease-out; }
+  .info-dialog[open]::backdrop { animation: backdrop-arrival 180ms ease-out; }
+  @keyframes backdrop-arrival { from { opacity: 0; } to { opacity: 1; } }
+
+  .with-chevron::after { transition: translate 160ms ease; }
+  .action-button:active, .send-button:active { scale: .98; }
+
+  @media (hover: hover) and (pointer: fine) {
+    .with-chevron:hover::after { translate: 3px 0; }
+  }
+
+  @media (max-width: 66rem) {
+    .menu-toggle span { transition: transform 160ms ease, opacity 120ms ease; }
+    .menu-toggle[aria-expanded="true"] span:first-child {
+      transform: translateY(calc(.32rem + 2px)) rotate(45deg);
+    }
+    .menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .menu-toggle[aria-expanded="true"] span:last-child {
+      transform: translateY(calc(-.32rem - 2px)) rotate(-45deg);
+    }
+    .menu-toggle[aria-expanded="true"] + .main-nav {
+      animation: menu-arrival 155ms ease-out;
+    }
+  }
+}

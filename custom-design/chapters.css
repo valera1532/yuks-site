@@ -1,0 +1,193 @@
+/* Company and field photography */
+.company {
+  background: #081424;
+  color: #f4f6f8;
+}
+.company .rule, .career .rule { background: #ff6539; }
+.company-grid { grid-template-columns: 1.08fr .92fr; align-items: end; }
+.company-title h2, .career h2 {
+  font-size: clamp(3.3rem, 6.4vw, 7.6rem);
+  line-height: .97;
+  font-weight: 640;
+}
+.company-lede p:first-child { max-width: 26ch; }
+.company-lede p + p { color: #bdc8d6; }
+.field-gallery { border-color: #526174; }
+.gallery-tools [data-count] {
+  color: #dce5ef;
+  font-family: ui-monospace, Consolas, monospace;
+  letter-spacing: .045em;
+}
+.field-gallery .round { background: transparent; border-color: #718093; }
+.field-gallery .round:hover:enabled { background: #24354c; }
+.photo-track { gap: clamp(.8rem, 2vw, 2rem); }
+.photo-track figure {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 62%;
+  aspect-ratio: auto;
+  border-radius: 0;
+  background: transparent;
+}
+.photo-track img { height: auto; aspect-ratio: 1.98; border-radius: .5rem; }
+.photo-track figcaption {
+  position: static;
+  padding: .8rem 0 0;
+  color: #e1e8f0;
+  background: transparent;
+  font-size: .94rem;
+}
+
+/* The four engineering disciplines */
+#services { background: #e9edf1; }
+.service-grid { grid-template-columns: .85fr 1.15fr; align-items: start; }
+.service-grid h2 { font-size: clamp(3rem, 5.7vw, 6.7rem); font-weight: 640; }
+.service-list {
+  --service-time: .39s;
+  --service-ease: cubic-bezier(.23, .74, .25, 1);
+  container-type: inline-size;
+  border-top: 2px solid #0a1423;
+}
+.service-list details { border-color: #aeb9c4; }
+.service-list summary { min-height: 5.35rem; position: relative; }
+.service-list summary:focus-visible { outline: 2px solid #1c577e; outline-offset: 2px; }
+.service-list summary span {
+  color: #0a1423;
+  border-color: #8795a5;
+  border-radius: .45rem;
+  transition: background-color .2s ease, border-color .2s ease, transform .18s ease;
+}
+.service-list summary span::after {
+  transform-origin: center;
+  transition: rotate var(--service-time) var(--service-ease);
+}
+.service-list summary:active span { transform: scale(.93); }
+.service-list details[open] summary span { background: #ff6539; border-color: #ff6539; }
+.service-list summary:hover { color: #394e65; }
+.service-panel { min-height: 0; overflow: hidden; }
+.service-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(6rem, 25%, 11.25rem);
+  align-items: start;
+  gap: clamp(1.15rem, 3.1vw, 3rem);
+  padding: 0 0 1.4rem;
+}
+.service-list details p {
+  margin: 0;
+  max-width: 42ch;
+  color: #435165;
+  line-height: 1.52;
+}
+.service-photo {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1.6;
+  background-color: #c6d0d9;
+}
+.service-photo img { width: 100%; height: 100%; object-fit: cover; }
+.service-photo::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 2px;
+  background: #ff6539;
+  transform-origin: left;
+}
+@container (max-width: 24rem) {
+  .service-body { grid-template-columns: minmax(0, 1fr) minmax(4.3rem, 27%); gap: .85rem; }
+  .service-photo { aspect-ratio: .92; }
+  .service-list details p { font-size: 1rem; }
+}
+@supports selector(details::details-content) {
+  @media (prefers-reduced-motion: no-preference) {
+    .service-list details::details-content {
+      display: grid;
+      grid-template-rows: 0fr;
+      content-visibility: hidden;
+      transition: grid-template-rows var(--service-time) var(--service-ease),
+        content-visibility var(--service-time) allow-discrete;
+    }
+    .service-list details[open]::details-content {
+      grid-template-rows: 1fr;
+      content-visibility: visible;
+    }
+    .service-body p { opacity: 0; transform: translateY(-.38rem); transition: opacity .25s ease, transform .32s var(--service-ease); }
+    .service-photo img { transform: scale(1.075); transition: transform var(--service-time) var(--service-ease); }
+    .service-photo::after { transform: scaleX(0); transition: transform var(--service-time) var(--service-ease); }
+    details[open] > .service-panel .service-body p { opacity: 1; transform: none; }
+    details[open] > .service-panel .service-photo img,
+    details[open] > .service-panel .service-photo::after { transform: none; }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .service-list summary span, .service-list summary span::after { transition: none; }
+  .service-list summary:active span { transform: none; }
+}
+
+/* Team panorama */
+.career { background: #0a182b; color: #f4f6f8; }
+.career-grid {
+  width: min(100%, 120rem);
+  grid-template-columns: minmax(0, .83fr) minmax(0, 1.17fr);
+  background: transparent;
+  border-radius: 0;
+}
+.career-photo {
+  grid-area: 1 / 2;
+  min-height: 29rem;
+  clip-path: polygon(11% 0, 100% 0, 100% 100%, 0 100%);
+}
+.career-photo img { object-position: 53% center; }
+.career-copy {
+  grid-area: 1 / 1;
+  padding: clamp(3.5rem, 6.8vw, 8.5rem) 1rem clamp(3.5rem, 6.8vw, 8.5rem) max(var(--gutter), calc((100vw - 97rem) / 2));
+}
+.career-copy > p:not(.category) { max-width: 33ch; color: #c8d3df; }
+.career .accent { background: #f1f3f5; color: #0a1423; }
+.career .accent:hover { background: #ff875f; }
+
+/* Partners and contact */
+.partners { background: #f1f3f5; }
+.partner-heading { font-weight: 650; }
+.partner-list { border-color: #aeb9c4; }
+.partner-list li + li { border-color: #c1c9d2; }
+.footer {
+  overflow: clip;
+  color: #f8faff;
+  background: linear-gradient(107deg, #0c1e47 0%, #183882 57%, #2953be 100%);
+}
+.footer .category { color: #cfddff; }
+.footer .rule { background: currentColor; }
+.footer .accent { background: #f5f8ff; color: #13285a; }
+.footer .accent:hover { background: #dbe7ff; }
+.footer-main { grid-template-columns: 1.1fr .9fr; }
+.footer h2 { font-size: clamp(4rem, 8.1vw, 9.3rem); line-height: .94; font-weight: 675; }
+.footer address span { color: #cfddff; font-size: .94rem; font-weight: 650; }
+.footer address a { text-decoration-thickness: .06em; text-underline-offset: .15em; }
+.footer address a:hover { color: #e2ebff; text-decoration-line: underline; }
+.footer :focus-visible { outline-color: #fff; }
+.footer-end { position: relative; isolation: isolate; color: #fff; border: 0; }
+.footer-end::before { content: ""; position: absolute; inset: 0 -100vw; z-index: -1; background: #071328; }
+.footer-end small, .footer-end > a:last-child { color: #c5d3ec; }
+.footer-end > a:last-child:hover { color: #fff; text-decoration: underline; text-underline-offset: .2em; }
+
+@media (min-width: 64rem) {
+  .partners > .frame { display: grid; grid-template-columns: 1fr 2.15fr; align-items: center; gap: 3rem; }
+  .partner-list { margin-top: 0; }
+}
+@media (max-width: 54rem) {
+  .career-grid { grid-template-columns: minmax(0, 1fr); }
+  .career-photo { grid-area: 1 / 1; min-height: 0; aspect-ratio: 2.44; clip-path: none; }
+  .career-copy { grid-area: 2 / 1; padding: 2.85rem var(--gutter) 3.5rem; }
+}
+@media (max-width: 43rem) {
+  .company-grid, .service-grid, .career-grid, .footer-main { grid-template-columns: minmax(0, 1fr); }
+  .company-title h2, .service-grid h2, .career h2 { font-size: clamp(3rem, 10.8vw, 4.8rem); }
+  .photo-track figure { flex-basis: 86%; }
+  .photo-track img { aspect-ratio: 1.46; }
+  .service-list summary { min-height: 4.35rem; }
+  .career-photo { aspect-ratio: 1.88; }
+  .career-copy { padding-block: 2.45rem 3.35rem; }
+  .career-copy > p:not(.category) { max-width: 40ch; }
+  .footer h2 { font-size: clamp(3.6rem, 13vw, 5.8rem); }
+}
