@@ -9,20 +9,21 @@
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const contactLinks = `<a href="mailto:${recipient}">${recipient}</a>
     <a href="tel:+79185208753">+7 918 520-87-53</a>`;
+  const offices = document.querySelector('[data-company-addresses]');
   dialog.innerHTML = `
     <div class="contact-card">
       <div class="contact-handle" aria-hidden="true"><span></span></div>
       <aside class="contact-info" aria-label="Контакты ЮКС">
         <div class="contact-wordmark"><img src="assets/logo-mark-white.svg" alt="">ЮКС</div>
         <div class="contact-drawing" aria-hidden="true"></div>
-        <address class="contact-address"><span>Мариуполь</span>${contactLinks}</address>
+        <address class="contact-address">${contactLinks}</address>
       </aside>
       <div class="contact-scroll">
         <div class="contact-heading">
           <h2 id="contact-dialog-title" tabindex="-1">Написать в ЮКС</h2>
           <button type="button" class="contact-close" aria-label="Закрыть форму"></button>
         </div>
-        <form class="contact-fields">
+        <form class="contact-fields" action="contact.php" method="post">
           <fieldset class="contact-topics">
             <legend>Тема письма</legend>
             <label><input type="radio" name="subject" value="Проект" checked><span>Проект</span></label>
@@ -44,16 +45,25 @@
             </div>
           </div>
           <div class="contact-actions">
-            <button class="contact-submit" type="submit">Открыть черновик</button>
+            <button class="contact-submit" type="submit">Отправить сообщение</button>
             <button class="contact-copy" type="button">Скопировать письмо</button>
           </div>
-          <p class="contact-note">Проверьте письмо и отправьте его из своей почты</p>
           <p class="contact-status" role="status" aria-live="polite"></p>
+          <a class="contact-email-fallback" hidden>Отправить через свою почту</a>
           <label class="contact-field contact-fallback" hidden>Текст письма для копирования<textarea rows="4" readonly></textarea></label>
         </form>
         <details class="contact-direct"><summary>Контакты ЮКС</summary><address>${contactLinks}</address></details>
       </div>
     </div>`;
+
+  if (offices) {
+    for (const address of dialog.querySelectorAll('address')) {
+      const list = offices.cloneNode(true);
+      list.removeAttribute('data-company-addresses');
+      list.className = 'contact-offices';
+      address.prepend(list);
+    }
+  }
 
   const card = dialog.querySelector('.contact-card');
   const title = dialog.querySelector('h2');
@@ -65,6 +75,9 @@
   const status = dialog.querySelector('.contact-status');
   const fallback = dialog.querySelector('.contact-fallback');
   const fallbackText = fallback.querySelector('textarea');
+  const mailFallback = dialog.querySelector('.contact-email-fallback');
+  const submitButton = dialog.querySelector('.contact-submit');
+  const copyButton = dialog.querySelector('.contact-copy');
   const handle = dialog.querySelector('.contact-handle');
   const tabs = dialog.querySelector('.contact-topics');
   const marker = tabs.querySelector('.contact-tab-marker');
@@ -158,6 +171,7 @@
     validate(contact);
     status.textContent = '';
     fallback.hidden = true;
+    mailFallback.hidden = true;
   }
 
   form.addEventListener('change', (event) => {
@@ -188,8 +202,12 @@
     dialog.classList.toggle('is-retiring', close);
     const target = close ? card.offsetHeight + 12 : 0;
     const finished = () => {
-      if (close) dialog.close();
-      else card.style.removeProperty('transform');
+      if (close) {
+        saveDraft();
+        dialog.close();
+      } else {
+        card.style.removeProperty('transform');
+      }
       position = velocity = 0;
     };
     if (reduceMotion.matches) {
@@ -230,7 +248,7 @@
     if (dialog.open) return;
     opener = trigger;
     const topic = trigger.dataset.contact.trim() || 'Проект';
-    showDraft(Object.hasOwn(topics, topic) ? topic : 'Другое');
+    if (!submitButton.disabled) showDraft(Object.hasOwn(topics, topic) ? topic : 'Другое');
     dialog.querySelector('.contact-direct').open = false;
     dialog.showModal();
     alignMarker();
@@ -255,6 +273,7 @@
     outsideDown = false;
   });
   dialog.addEventListener('close', () => {
+    if (dialog.open) return;
     stopMotion();
     cancelAnimationFrame(markerFrame);
     draftAnimation?.cancel();
@@ -262,7 +281,6 @@
     gesture = null;
     position = velocity = 0;
     card.style.removeProperty('transform');
-    saveDraft();
     if (opener?.isConnected) opener.focus({ preventScroll: true });
   });
 
@@ -330,6 +348,7 @@
     validate(event.target);
     status.textContent = '';
     fallback.hidden = true;
+    mailFallback.hidden = true;
   });
   function letter() {
     for (const field of form.elements) validate(field);
@@ -338,14 +357,52 @@
     const body = [message.value.trim(), '', ...signature].join('\r\n');
     return { subject: topics[context].subject, body };
   }
-  form.addEventListener('submit', (event) => {
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
+    if (submitButton.disabled) return;
     const draft = letter();
     if (!draft) return;
-    status.textContent = 'Если почта не открылась, скопируйте письмо';
-    window.location.href = 'mailto:' + recipient + '?subject=' + encodeURIComponent(draft.subject) + '&body=' + encodeURIComponent(draft.body);
+    const payload = Object.fromEntries(new FormData(form));
+    const controls = [...form.querySelectorAll('input, textarea, button')];
+    for (const control of controls) control.disabled = true;
+    submitButton.textContent = 'Отправляем…';
+    status.textContent = '';
+    fallback.hidden = true;
+    mailFallback.hidden = true;
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 30000);
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload),
+        signal: controller.signal
+      });
+      const result = await response.json();
+      if (response.ok && result.ok === true) {
+        drafts.delete(context);
+        showDraft(context);
+        status.textContent = 'Спасибо! Ваше сообщение отправлено.';
+        return;
+      }
+      if (response.status === 429) {
+        status.textContent = 'Много сообщений подряд. Попробуйте через минуту или напишите по почте.';
+      } else if (response.status === 422) {
+        status.textContent = 'Проверьте сообщение и контакт для ответа.';
+      } else {
+        throw new Error('Mail unavailable');
+      }
+    } catch {
+      status.textContent = 'Не удалось подтвердить отправку. Попробуйте ещё раз или напишите по почте.';
+    } finally {
+      clearTimeout(timeout);
+      for (const control of controls) control.disabled = false;
+      submitButton.textContent = 'Отправить сообщение';
+    }
+    mailFallback.href = 'mailto:' + recipient + '?subject=' + encodeURIComponent(draft.subject) + '&body=' + encodeURIComponent(draft.body);
+    mailFallback.hidden = false;
   });
-  dialog.querySelector('.contact-copy').addEventListener('click', async () => {
+  copyButton.addEventListener('click', async () => {
     const draft = letter();
     if (!draft) return;
     const text = ['Кому: ' + recipient, 'Тема: ' + draft.subject, '', draft.body].join('\r\n');

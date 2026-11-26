@@ -8,6 +8,7 @@
     {
       id: 'kalinovka', place: 'Калиновка', region: donetsk,
       title: 'Мост через Кальмиус', caption: 'Реконструкция моста',
+      photoAlt: 'Пролёты и опоры моста через Кальмиус в Калиновке',
       heading: 'Реконструкция моста через реку Кальмиус в посёлке Калиновка',
       details: [
         'Компания «ЮКС» принимала участие в реконструкции моста через реку Кальмиус в посёлке Калиновка, недалеко от Мариуполя',
@@ -20,6 +21,7 @@
     {
       id: 'a289', place: 'Краснодарский край', region: 'Краснодарский край',
       title: 'Трасса А-289', caption: 'Более 10 мостовых сооружений',
+      photoAlt: 'Вид сверху на трассу А-289 в Краснодарском крае',
       heading: 'Мостовые сооружения на трассе А-289 Краснодар — Керчь',
       details: [
         'Компания «ЮКС» принимала участие в реализации проекта строительства транспортного коридора на трассе А-289 Краснодар — Керчь',
@@ -31,6 +33,7 @@
     {
       id: 'ivanovka', place: 'Ивановка', region: donetsk,
       title: 'Мост через Грузский Еланчик', caption: 'Обновление мостового сооружения',
+      photoAlt: 'Мост через Грузский Еланчик в посёлке Ивановка',
       heading: 'Строительство моста через реку Грузский Еланчик в посёлке Ивановка',
       details: [
         'Компания «ЮКС» реализовала проект по обновлению мостового сооружения через реку Грузский Еланчик в посёлке Ивановка',
@@ -65,18 +68,60 @@
         <button class="project-prev" type="button" aria-label="Предыдущий проект" aria-controls="${trackId}">${arrow(-1)}</button>
         <button class="project-next" type="button" aria-label="Следующий проект" aria-controls="${trackId}">${arrow(1)}</button>
       </div>
-    </div>
-    <details class="project-info">
-      <summary class="project-info-toggle">Подробнее о проекте</summary>
-      <div class="project-info-copy"></div>
-    </details>`;
+    </div>`;
   const track = swiper.querySelector('.project-track');
   const thumbs = swiper.querySelector('.project-thumbs');
   const prev = swiper.querySelector('.project-prev');
   const next = swiper.querySelector('.project-next');
   const count = swiper.querySelector('.project-count');
-  const info = swiper.querySelector('.project-info');
-  const copy = swiper.querySelector('.project-info-copy');
+  const dialog = document.createElement('dialog');
+  dialog.id = 'project-dialog';
+  dialog.setAttribute('aria-labelledby', 'project-dialog-title');
+  dialog.innerHTML = `
+    <div class="project-story">
+      <div class="project-story-bar">
+        <p class="project-place"></p>
+        <button type="button" class="project-story-close" aria-label="Закрыть описание проекта">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="project-story-text">
+        <h2 id="project-dialog-title" tabindex="-1" autofocus></h2>
+        <img class="project-story-photo" alt="">
+        <div class="project-story-paragraphs"></div>
+      </div>
+    </div>`;
+  const storyTitle = dialog.querySelector('h2');
+  const storyPlace = dialog.querySelector('.project-place');
+  const storyPhoto = dialog.querySelector('.project-story-photo');
+  const storyText = dialog.querySelector('.project-story-paragraphs');
+  let opener;
+
+  function openProject(project, button) {
+    opener = button;
+    storyTitle.textContent = project.heading;
+    storyPlace.textContent = project.place;
+    storyPhoto.dataset.project = project.id;
+    storyPhoto.alt = project.photoAlt ?? project.title;
+    storyPhoto.src = src(project);
+    storyText.replaceChildren(...project.details.map(text => {
+      const paragraph = document.createElement('p');
+      paragraph.textContent = text;
+      return paragraph;
+    }));
+    dialog.showModal();
+    dialog.querySelector('.project-story-text').scrollTop = 0;
+  }
+  dialog.querySelector('.project-story-close').addEventListener('click', () => dialog.close());
+  let backdropPress = false;
+  dialog.addEventListener('pointerdown', event => { backdropPress = event.target === dialog; });
+  dialog.addEventListener('click', event => {
+    if (backdropPress && event.target === dialog) dialog.close();
+    backdropPress = false;
+  });
+  dialog.addEventListener('close', () => {
+    if (!dialog.open) (opener?.closest('.is-current') ? opener : track).focus({ preventScroll: true });
+  });
   for (const [index, project] of projects.entries()) {
     const id = 'project-' + project.id;
     const slide = document.createElement('article');
@@ -92,7 +137,12 @@
         <p class="project-place">${project.place}</p>
         <h3 class="project-name">${project.title}</h3>
         ${project.caption ? `<p class="project-caption">${project.caption}</p>` : ''}
-      </div>`;
+      </div>
+      ${project.details?.length ? `<button type="button" class="project-info-button" aria-label="Подробнее о проекте: ${project.title}, ${project.place}" title="Подробнее о проекте" aria-haspopup="dialog" aria-controls="${dialog.id}">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="7" r="1.45" fill="currentColor"/><path d="M10.5 11h1.5v6.5m-2 0h4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>` : ''}`;
+    const infoButton = slide.querySelector('.project-info-button');
+    infoButton?.addEventListener('click', () => openProject(project, infoButton));
     const thumb = document.createElement('button');
     thumb.type = 'button';
     thumb.className = 'project-thumb';
@@ -103,7 +153,7 @@
     thumbs.append(thumb);
     track.append(slide);
   }
-  catalog.replaceChildren(swiper);
+  catalog.replaceChildren(swiper, dialog);
 
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const slides = [...track.children];
@@ -125,6 +175,7 @@
   function show(index) {
     if (active === index) return;
     if (active >= 0) {
+      if (slides[active].contains(document.activeElement)) track.focus({ preventScroll: true });
       slides[active].setAttribute('aria-hidden', 'true');
       slides[active].classList.remove('is-current');
       buttons[active].removeAttribute('aria-current');
@@ -139,20 +190,6 @@
     const number = String(index + 1).padStart(2, '0');
     count.innerHTML = `<span>${number}</span><span> / </span><span>${String(projects.length).padStart(2, '0')}</span>`;
     count.setAttribute('aria-label', `Проект ${index + 1} из ${projects.length}: ${project.title}, ${project.place}`);
-    copy.replaceChildren();
-    info.hidden = !project.details;
-    if (project.details) {
-      const heading = document.createElement('h4');
-      heading.textContent = project.heading;
-      copy.append(heading);
-      for (const text of project.details) {
-        const paragraph = document.createElement('p');
-        paragraph.textContent = text;
-        copy.append(paragraph);
-      }
-    } else {
-      info.open = false;
-    }
     keepThumbVisible(buttons[index]);
   }
   function closestIndex(offset) {
@@ -209,7 +246,7 @@
   prev.addEventListener('click', () => select(active - 1));
   next.addEventListener('click', () => select(active + 1));
   swiper.addEventListener('keydown', event => {
-    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey || info.contains(event.target)) return;
+    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
     const offsets = { ArrowLeft: active - 1, ArrowRight: active + 1, Home: 0, End: last };
     if (!Object.hasOwn(offsets, event.key)) return;
     const fromThumb = thumbs.contains(event.target);
@@ -220,7 +257,7 @@
 
   // Touch and wheel keep native inertia. Mouse dragging temporarily releases the snap points.
   track.addEventListener('pointerdown', event => {
-    if (!event.isPrimary || event.button !== 0) return;
+    if (!event.isPrimary || event.button !== 0 || event.target.closest('button')) return;
     interruptScroll();
     if (event.pointerType !== 'mouse') return;
     drag = { id: event.pointerId, x: event.clientX, y: event.clientY, offset: track.scrollLeft,

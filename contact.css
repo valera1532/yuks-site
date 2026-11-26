@@ -71,7 +71,9 @@ html:has(#contact-dialog[open]) { overflow: hidden; }
   border-top: 1px solid #495c70;
   font-style: normal;
 }
-.contact-address span { margin-bottom: .3rem; color: #becbd7; font-size: .88rem; }
+.contact-offices { display: grid; gap: .65rem; margin: 0 0 .65rem; font-size: .88rem; line-height: 1.4; }
+.contact-offices dt { color: #becbd7; font-size: .77rem; }
+.contact-offices dd { margin: 0; }
 .contact-address a { font-size: clamp(1rem, 1.6vw, 1.45rem); font-weight: 540; line-height: 1.35; letter-spacing: -.035em; }
 .contact-address a:hover, .contact-direct a:hover { text-decoration: underline; text-underline-offset: .18em; }
 
@@ -205,9 +207,10 @@ html:has(#contact-dialog[open]) { overflow: hidden; }
   font-size: .98rem;
   font-weight: 740;
 }
+.contact-submit:disabled { cursor: progress; opacity: .75; }
+.contact-email-fallback { width: fit-content; margin-top: -.65rem; color: #203d57; font-size: .88rem; font-weight: 600; text-decoration: underline; text-underline-offset: .2em; }
 .contact-copy { padding: .45rem .1rem; background: transparent; color: #314456; font-size: .86rem; font-weight: 590; text-decoration: underline; text-underline-offset: .2em; }
-.contact-note, .contact-status { margin: -.65rem 0 0; color: #4c5b6a; font-size: .83rem; line-height: 1.45; font-weight: 450; }
-.contact-status { color: #203d57; font-weight: 600; }
+.contact-status { margin: -.65rem 0 0; color: #203d57; font-size: .83rem; line-height: 1.45; font-weight: 600; }
 .contact-status:empty { display: none; }
 @media (hover: hover) {
   .contact-submit:hover { background: #ff794f; }
@@ -243,10 +246,12 @@ html:has(#contact-dialog[open]) { overflow: hidden; }
   .contact-message textarea { min-height: 6.2rem; height: 6.2rem; }
   .contact-row { gap: .65rem; }
   .contact-actions { gap: .22rem .9rem; }
-  .contact-note, .contact-status { margin-top: -.5rem; }
+  .contact-status, .contact-email-fallback { margin-top: -.5rem; }
   .contact-direct { display: block; margin-top: .8rem; border-top: 1px solid #d3d9de; font-size: .86rem; color: #374a5b; }
   .contact-direct summary { width: fit-content; padding: .65rem .2rem .35rem 0; cursor: pointer; }
   .contact-direct address { display: flex; flex-wrap: wrap; gap: .2rem 1.1rem; padding: .25rem 0 .5rem; font-style: normal; }
+  .contact-direct .contact-offices { width: 100%; }
+  .contact-direct .contact-offices dt { color: #536779; }
 }
 @media (max-width: 25rem) {
   .contact-row { grid-template-columns: minmax(0, 1fr); }
